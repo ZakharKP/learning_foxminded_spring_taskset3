@@ -331,14 +331,14 @@ To try this project, you'll need to have [Docker](https://www.docker.com/get-sta
       git clone <repository path>
       ```
 
-  2. Navigate to the directory with the project:
+  2. Navigate to the directory "task3_web_application" in the project directory:
   
       ```
-      cd <path to project dir>
+      cd <path-to-project>/task3_web_application
       ```
       (probably)
       ```
-      cd task3_web_application
+      cd learning_foxminded_spring_taskset3/task3_web_application
       ```
 
   3. Run Docker Compose:
@@ -350,7 +350,7 @@ To try this project, you'll need to have [Docker](https://www.docker.com/get-sta
       sudo docker-compose up
       ```
 
-  4. After the app is running, you can use your browser to access the application at [http://localhost:8080](http://localhost:8080).
+  4. After the app is running, you can use your browser to access the application at [http://localhost:8080](http://localhost:8080)
 
 </details>
 <br>
