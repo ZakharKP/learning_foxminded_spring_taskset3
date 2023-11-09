@@ -342,7 +342,8 @@ To try this project, you'll need to have [Docker](https://www.docker.com/get-sta
       ```
 
   3. Run Docker Compose:
-    ```
+
+     ```
       docker-compose up
       ```
       (or)
@@ -350,7 +351,7 @@ To try this project, you'll need to have [Docker](https://www.docker.com/get-sta
       sudo docker-compose up
       ```
 
-  4. After the app is running, you can use your browser to access the application at [http://localhost:8080](http://localhost:8080)
+  5. After the app is running, you can use your browser to access the application at [http://localhost:8080](http://localhost:8080)
 
 </details>
 <br>
