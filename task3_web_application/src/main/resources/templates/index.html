@@ -1,0 +1,62 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Welcome To Foxminded University</title>
+
+	<!-- Common styles and scripts -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+</head>
+
+<body>
+	<!-- Include the main content of each template here -->
+	<div th:replace="~{fragments/header :: header}"></div>
+
+	<div class="container">
+		<h1>Welcome</h1>
+
+		<!-- Include the teacher menu if the user is an teache -->
+		<div th:replace="~{teacher/menu :: menu}"></div>
+
+		<!-- Include the student menu if the user is an student -->
+		<div th:replace="~{student/menu :: menu}"></div>
+
+		<!-- Include the admin menu if the user is an admin -->
+		<div th:replace="~{admin/menu :: menu}"></div>
+
+		<!-- Include the admin menu if the user is an admin -->
+		<div th:replace="~{guest/menu :: menu}"></div>
+
+		<div class="container" sec:authorize="isAuthenticated()">
+			<li><a th:href="@{/students}"><strong>Student's List</strong></a></li>
+			<br>
+			<li><a th:href="@{/teachers}"><strong>Teacher's List</strong></a></li>
+			<br>
+			<li><a th:href="@{/courses}"><strong>Course's List</strong></a></li>
+			<br>
+			<li><a th:href="@{/groups}"><strong>Group's List</strong></a></li>
+			<br>
+			<li><a th:href="@{/schedule}"><strong>University Schedule</strong></a></li>
+
+
+			<br>
+			<li><a th:href="@{/account-information}"><strong>Account Information</strong></a></li><br>
+
+		</div>
+
+		<div th:replace="~{fragments/footer :: footer}"></div>
+
+	</div>
+
+
+	<!-- Include other common stylesheets and scripts here -->
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+</body>
+
+</html>

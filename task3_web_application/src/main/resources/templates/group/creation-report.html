@@ -1,0 +1,61 @@
+<!-- admin/registration-report.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Creation Report</title>
+
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+</head>
+
+<body>
+
+	<div class="container">
+		<div th:replace="~{fragments/header :: header}"></div>
+		<div class="row">
+			<div class="col-md-4 mt-5">
+
+				<h1 th:if="${param.success}">New Group Registered Successfully</h1>
+				<h1 th:if="${param.error}">New Group Not Registered</h1>
+				<h1 th:unless="${param.success} or ${param.error}">Unknown Error Try Again</h1>
+				<!-- Display success message -->
+				<div th:if="${param.success}" class="alert alert-success" role="alert">
+
+					Group Name: <span th:text="${param.groupName}"></span><br>
+					Students Amount: <span th:text="${param.studentsAmount}"></span><br>
+
+				</div>
+
+				<!-- Display error message -->
+				<div th:if="${param.error}" class="alert alert-danger" role="alert">
+					Group Name: <span th:text="${param.groupName}"></span><br>
+					Students Amount: <span th:text="${param.studentsAmount}"></span><br>
+				</div>
+
+				<!-- Buttons for success and error cases -->
+				<div th:if="${param.success}">
+					<a href="/group/creation" class="btn btn-primary">Register New Group</a>
+				</div>
+				<div th:if="${param.error}">
+					<button class="btn btn-danger" onclick="goBack()">Try Again</button>
+				</div>
+
+
+			</div>
+		</div>
+		<div th:replace="~{fragments/footer :: footer}"></div>
+	</div>
+
+
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+
+
+</body>
+
+</html>

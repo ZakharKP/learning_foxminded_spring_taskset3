@@ -1,0 +1,41 @@
+<!-- teacher_menu.html -->
+<div th:fragment="menu" th:if="${#request.isUserInRole('TEACHER') or #request.isUserInRole('ADMIN')}">
+	<h2>Hello Teacher</h2>
+	<p>You are logged in as a Teacher.</p>
+
+	<p class="card-text">
+	<form th:action="@{/teacher/personal}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${userDetails.username}" />
+		<button type="submit" class="btn btn-link">Personal Information</button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/teacher/courses}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${userDetails.username}" />
+		<button type="submit" class="btn btn-link">My Courses</button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/teacher/groups}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${userDetails.username}" />
+		<button type="submit" class="btn btn-link">My Groups</button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/teacher/students}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${userDetails.username}" />
+		<button type="submit" class="btn btn-link">My Students</button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/teacher/schedule}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${userDetails.username}" />
+		<button type="submit" class="btn btn-link">My Schedule</button>
+	</form>
+	</p>
+	
+</div>

@@ -1,0 +1,66 @@
+<!-- admin/add-new-student.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Add New Student</title>
+
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+</head>
+
+<body>
+
+
+	<div class="container">
+		<div th:replace="~{fragments/header :: header}"></div>
+		<h1>Register New Student</h1>
+		<div class="row">
+			<div class="col-md-4 mt-5">
+
+				<form th:action="@{/admin/signup}" method="post" th:object="${form}">
+
+
+					<label for="firstName">First Name:</label>
+					<input type="text" id="firstName" name="firstName" th:field="*{firstName}" required><br>
+
+					<label for="lastName">Last Name:</label>
+					<input type="text" id="lastName" name="lastName" th:field="*{lastName}" required><br>
+
+					<!-- Include fields for LoginData -->
+					<label for="userName">Username:</label>
+					<input type="text" id="userName" name="login.userName" th:field="*{userName}" required><br>
+
+					<label for="password">Password:</label>
+					<input type="password" id="password" name="login.password" th:field="*{password}" required><br>
+
+					<div class="form-group">
+						<label for="group">Group:</label>
+						<select class="form-control selectpicker" id="group" th:field="*{groupId}" required>
+							<option value="">-- Select a Group --</option>
+							<option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.groupName}">
+							</option>
+						</select><br>
+					</div>
+
+					<input type="hidden" name="roleName" th:value="Student">
+
+
+					<button class="btn btn-primary" type="submit">SignUp Student</button>
+				</form>
+			</div>
+		</div>
+		<div th:replace="~{fragments/footer :: footer}"></div>
+	</div>
+
+
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+
+
+</body>
+
+</html>

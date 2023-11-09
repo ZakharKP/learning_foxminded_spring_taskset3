@@ -1,0 +1,21 @@
+<!-- admin/managment/lecture.html -->
+<div th:fragment="menu" th:if="${#request.isUserInRole('ADMIN')}">
+	<h2>Manage Lecture</h2>
+	<br>
+
+	<p><a th:href="@{/lecture/creation}">Add New Lecture</a></p>
+
+	<p class="card-text">
+	<form th:action="@{/lecture/editor}" method="get">
+		<input type="hidden" name="lectureId" th:value="${lecture.id}" />
+		<button type="submit" class="btn btn-link"><strong>Edit Lecture</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/lecture/delete}" method="get">
+		<input type="hidden" name="lectureId" th:value="${lecture.id}" />
+		<button type="submit" class="btn btn-link"><strong>Delete Lecture</strong></button>
+	</form>
+	</p>
+</div>

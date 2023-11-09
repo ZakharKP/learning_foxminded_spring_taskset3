@@ -1,0 +1,19 @@
+<!-- admin/managment/group.html -->
+<div th:fragment="menu" th:if="${#request.isUserInRole('ADMIN')}">
+	<h2>Manage Group</h2>
+	<br>
+
+	<p class="card-text">
+	<form th:action="@{/group/editor}" method="get" style="display: inline;">
+		<input type="hidden" name="groupId" th:value="${group.id}" />
+		<button type="submit" class="btn btn-link"><strong>Edit Group</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/group/delete}" method="get" style="display: inline;">
+		<input type="hidden" name="groupId" th:value="${group.id}" />
+		<button type="submit" class="btn btn-link"><strong>Delete Group</strong></button>
+	</form>
+	</p>
+</div>

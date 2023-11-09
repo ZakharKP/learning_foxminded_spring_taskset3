@@ -1,0 +1,89 @@
+<!-- groups.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Groups</title>
+	<!-- Common styles and scripts -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+	<!-- Table -->
+	<link th:rel="stylesheet" th:href="@{/webjars/datatables/1.13.5/css/jquery.dataTables.min.css}" />
+
+</head>
+
+<body>
+	<!-- Include the main content of each template here -->
+	<div th:replace="~{fragments/header :: header}"></div>
+
+
+	<div class="container">
+		<h1 th:text="'List Of ' + ${caller} + ' Groups'"></h1>
+		<div class="row">
+			<div class="col-lg-10 mt-5 mb-5">
+
+				<table id="groups" class="table table-bordered table-responsive" style="width: 100%">
+					<caption th:text="'List Of ' + ${caller} + ' Groups'"></caption>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Amount of students</th>
+							<th>Select</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr th:each="group : ${groups}">
+							<td th:text="${group.groupName}"></td>
+							<td th:text="${group.students != null ? #sets.size(group.students) : '0'}">
+							</td>
+							<td>
+								<form th:action="@{/group/details}" method="get">
+									<input type="hidden" name="groupId" th:value="${group.id}" />
+									<button type="submit" class="btn btn-primary">Details</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>Name</th>
+							<th>Amount of students</th>
+							<th>Select</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+
+		<div th:replace="~{fragments/footer :: footer}"></div>
+
+		<!-- Include other common stylesheets and scripts here -->
+		<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+		<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+		<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+
+		<!-- Table -->
+		<script th:src="@{/webjars/datatables/1.13.5/js/jquery.dataTables.min.js}"></script>
+		<!-- Add this after including the jQuery and DataTables scripts -->
+		<script th:src="@{https://cdn.datatables.net/plug-ins/1.13.5/sorting/natural.js}"></script>
+
+
+		<script>
+			$(document).ready(function () {
+				$('#groups').DataTable({
+					paging: false,
+					searching: true,
+					scrollY: '500px',
+					columnDefs: [
+						{type: 'natural', targets: '_all'}
+					]
+				});
+			});
+		</script>
+
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<!-- admin/managment/course.html -->
+<div th:fragment="menu" th:if="${#request.isUserInRole('ADMIN')}">
+	<h2>Manage Course</h2>
+	<br>
+		
+	<p class="card-text">
+	<form th:action="@{/course/editor}" method="get">
+		<input type="hidden" name="courseId" th:value="${course.id}" />
+		<button type="submit" class="btn btn-link"><strong>Edit Course</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/course/delete-course}" method="get">
+		<input type="hidden" name="courseId" th:value="${course.id}" />
+		<button type="submit" class="btn btn-link"><strong>Delete Course</strong></button>
+	</form>
+	</p>
+</div>

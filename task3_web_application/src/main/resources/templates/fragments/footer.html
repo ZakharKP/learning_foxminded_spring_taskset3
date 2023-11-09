@@ -1,0 +1,25 @@
+<div th:fragment="footer">
+	<!-- Your footer content -->
+	<br><br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<footer class="text-left">
+					<div class="col">
+						<button class="btn btn-danger" onclick="goBack()">Go Back</button>
+					</div>
+					<div class="col" sec:authorize="isAuthenticated()">
+						<form th:action="@{/logout}" method="post">
+							<button class="btn btn-danger" type="submit">Logout</button>
+						</form>
+					</div>
+				</footer>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		function goBack() {
+			window.history.back();
+		}
+	</script>
+</div>

@@ -1,0 +1,65 @@
+<!-- teacher_managment.html -->
+<div th:fragment="menu" th:if="${#request.isUserInRole('ADMIN')}">
+
+	<p class="card-text"><strong>User Name:</strong> <span th:text="${teacher.login.userName}"></span></p>
+	<p class="card-text"><strong>Role: </strong><span th:text="${teacher.login.role.roleName}"></span></p>
+
+	<p class="card-text">
+	<form th:action="@{/teacher/schedule}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${teacher.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Teacher's Schedule</strong></button>
+	</form>
+	</p>
+
+	<h2>Manage Teacher</h2>
+	<br>
+
+	<p class="card-text">
+	<form th:action="@{/admin/user-account-information}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${teacher.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>User's Account
+				Information</strong></button>
+	</form>
+	</p>
+	<p class="card-text">
+	<form th:action="@{/admin/password-editor}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${teacher.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Change User's Password</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/teacher/editor}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${teacher.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Edit Teacher</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/teacher/courses}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${teacher.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Teacher's Courses</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/teacher/groups}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${teacher.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Teacher's Groups</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/teacher/students}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${teacher.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Teacher's Students</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/admin/delete-user}" method="get">
+		<input type="hidden" name="userName" th:value="${teacher.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Delete Teacher</strong></button>
+	</form>
+	</p>
+</div>

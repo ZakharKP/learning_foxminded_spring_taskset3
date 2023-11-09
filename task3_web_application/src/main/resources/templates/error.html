@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error</title>
+</head>
+<body>
+    <h1>Error</h1>
+    
+    <p th:text="${#request.getAttribute('javax.servlet.error.message')}">Oops! Something went wrong. Please try again later.</p>
+    <p>Status Code: <span th:text="${#request.getAttribute('javax.servlet.error.status_code')}">Unknown</span></p>
+    <button onclick="goBack()">Go Back</button>
+
+    <script th:inline="javascript">
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

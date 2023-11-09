@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Group's Editor</title>
+	<!-- Common styles and scripts -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+	<!-- Checkbox validation-->
+	<script th:src="@{/js/form-validation.js}" type="text/javascript"></script>
+
+	<!-- Table -->
+	<link th:rel="stylesheet" th:href="@{/webjars/datatables/1.13.5/css/jquery.dataTables.min.css}" />
+
+</head>
+
+<body>
+	<!-- Include the main content of each template here -->
+	<div th:replace="~{fragments/header :: header}"></div>
+
+	<div class="container">
+		<h1>Group's Editor</h1>
+		<div class="row">
+			<div class="col-md-4 mt-5">
+
+
+				<!-- Display success message -->
+				<div th:if="${param.success}" class="alert alert-success" role="alert">
+					Success: <span th:text="${param.message}"></span><br>
+				</div>
+
+				<!-- Display error message -->
+				<div th:if="${param.error}" class="alert alert-danger" role="alert">
+					Error: <span th:text="${param.message}"></span><br>
+				</div>
+
+				<div class="card-body">
+					<h3>
+						<p class="card-text"><strong>Name:</strong> <span th:text="${group.groupName}"></span></p>
+					</h3>
+					<button type="button" class="btn btn-primary" data-toggle="collapse"
+						data-target="#editNameForm">Edit Name</button>
+				</div>
+
+				<div id="editNameForm" class="collapse">
+					<form th:action="@{/group/editor/name}" method="post" th:object="${group}">
+						<input type="hidden" name="groupId" th:value="${group.id}">
+						<div class="form-group">
+							<label for="name">Name</label>
+							<input type="text" class="form-control" id="groupName" name="groupName"
+								th:value="${group.groupName}" required>
+						</div>
+						<button type="submit" class="btn btn-primary">Update Name</button>
+					</form>
+				</div>
+
+
+				<div class="card-body">
+					<h3>
+						<p class="card-text"><strong>Remove Students:</strong> </p>
+					</h3>
+					<button type="button" class="btn btn-primary" id="removeStudents" data-toggle="collapse"
+						data-target="#removeStudentsCollapse">Remove Students</button>
+				</div>
+
+				<div id="removeStudentsCollapse" class="collapse">
+					<form th:action="@{/group/editor/students}" id="removeStudentsForm" method="post"
+						th:object="${group}">
+						<input type="hidden" name="groupId" th:value="${group.id}">
+						<div class="form-group">
+							<table id="removeStudentsTable" class="table table-bordered" style="width: 100%">
+								<caption>Choose student's to remove from list below</caption>
+								<thead>
+									<tr>
+										<th>First Name</th>
+										<th>Last Name</th>
+										<th>Select</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr th:each="student : ${group.students}">
+										<td th:text="${student.firstName}"></td>
+										<td th:text="${student.lastName}"></td>
+										<td>
+											<input type="checkbox" class="form-check-input" th:name="selectedStudents"
+												th:value="${student.id}">
+										</td>
+									</tr>
+								</tbody>
+
+
+
+							</table>
+
+						</div>
+						<button class="btn btn-primary" type="submit" name="action" value="remove"
+							th:if="${not #lists.isEmpty(group.students)}">Remove
+							Students</button>
+					</form>
+				</div>
+
+				<div class="card-body">
+					<h3>
+						<p class="card-text"><strong>Add Students:</strong> </p>
+					</h3>
+					<button type="button" class="btn btn-primary" id="addStudents" data-toggle="collapse"
+						data-target="#addStudentsCollapse">Add Students</button>
+				</div>
+
+				<div id="addStudentsCollapse" class="collapse">
+					<form th:action="@{/group/editor/students}" method="post" id="addStudentsForm" th:object="${group}">
+						<input type="hidden" name="groupId" th:value="${group.id}">
+						<div class="form-group">
+							<table id="addStudentsTable" class="table table-bordered" style="width: 100%">
+								<caption>Choose students to add from the list below</caption>
+								<thead>
+									<tr>
+										<th>First Name</th>
+										<th>Last Name</th>
+										<th>Select</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="student : ${studentsWithoutGroup}">
+										<td th:text="${student.firstName}"></td>
+										<td th:text="${student.lastName}"></td>
+										<td>
+											<input type="checkbox" class="form-check-input" th:name="selectedStudents"
+												th:value="${student.id}">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<button class="btn btn-primary" type="submit" name="action" value="add"
+							th:if="${not #lists.isEmpty(studentsWithoutGroup)}">Add Students</button>
+					</form>
+				</div>
+
+			</div>
+
+		</div>
+		<div th:replace="~{fragments/footer :: footer}"></div>
+
+	</div>
+
+	<!-- Checkbox validation-->
+	<script>
+		updateSubmitButtonStatus('removeStudentsForm');
+		updateSubmitButtonStatus('addStudentsForm');
+	</script>
+
+	<!-- Include other common stylesheets and scripts here -->
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+
+	<!-- Table -->
+	<script th:src="@{/webjars/datatables/1.13.5/js/jquery.dataTables.min.js}"></script>
+	<!-- Add this after including the jQuery and DataTables scripts -->
+	<script th:src="@{https://cdn.datatables.net/plug-ins/1.13.5/sorting/natural.js}"></script>
+
+
+	<script>
+    $(document).ready(function () {
+        var dataTable = $('#removeStudentsTable').DataTable({
+            paging: false,
+            searching: true,
+            scrollY: '200px',
+            columnDefs: [
+                { type: 'natural', targets: '_all' }
+            ]
+        });
+
+        // Adjust columns when the table is displayed or updated
+        $('#removeStudentsTable').on('shown.bs.collapse', function () {
+            dataTable.columns.adjust();
+        });
+    });
+</script>
+
+	<script>
+		$(document).ready(function () {
+			$('#addStudentsTable').DataTable({
+				paging: false,
+				searching: true,
+				scrollY: '200px',
+				columnDefs: [
+					{type: 'natural', targets: '_all'}
+				]
+			});
+		});
+	</script>
+</body>
+
+</html>

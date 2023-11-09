@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Schedule</title>
+	<!-- Common styles and scripts -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+	<!-- Include Bootstrap Datepicker CSS and JS -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css}" />
+
+	<!-- Include other common stylesheets and scripts -->
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+
+	<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}"></script>
+
+
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+
+
+	<!-- Include FullCalendar script -->
+	<script th:src="@{/webjars/fullcalendar/6.1.8/index.global.min.js}"></script>
+	<script th:src="@{/webjars/fullcalendar/6.1.8/index.global.js}"></script>
+
+	<!-- Include Bootstrap Datepicker CSS and JS -->
+	<script th:src="@{/webjars/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js}"></script>
+
+	<!-- Set variables from thymeleaf to javaScript -->
+	<script th:inline="javascript">
+
+		var entityId = /*[[${entityDataMap['id']}]]*/ "text";
+		
+		console.log(entityId);
+
+	</script>
+
+	<script th:inline="javascript">
+
+		var entityClass = /*[[${entityDataMap['class']}]]*/ "text";
+		
+		console.log(entityClass);
+
+	</script>
+	
+	<script th:inline="javascript">
+
+		var parametresToRequest = '?entityId=' + entityId + '&entityClass=' + entityClass;
+		console.log(parametresToRequest);
+		
+		console.log(parametresToRequest);
+
+	</script>
+
+
+	<script>
+
+
+		document.addEventListener('DOMContentLoaded', function () {
+
+			var calendarEl = document.getElementById('calendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialView: 'dayGridMonth',
+				nowIndicator: true,
+				selectable: true,
+				editable: true,
+				headerToolbar: {
+					start: 'title',
+					center: 'prev,today,next',
+					end: 'dayGridYear,dayGridMonth,timeGridWeek,timeGridDay, listWeek'
+				},
+				firstDay: 1,
+				timeZone: 'Europe/Warsaw', // Set to Poland's time zone
+				eventSources: [
+					'/events' + parametresToRequest
+				],
+
+				eventClick: function (info) {
+					document.getElementById('lectureId').value = info.event.id;
+
+					var eventPropertiesElement = document.getElementById('eventProperties');
+
+					eventPropertiesElement.innerHTML = ''; // Clear existing properties
+					var propHtml = '';
+					Object.values(info.event.extendedProps).forEach(function (props) {
+						propHtml += '<li>' + props + '</li>';
+					});
+					eventPropertiesElement.innerHTML = propHtml;
+
+					// Open the modal
+					$('#eventModal').modal('show');
+					// change the border color just for fun
+					info.el.style.borderColor = 'red';
+				},
+
+				dateClick: function (info) {
+
+
+					calendar.changeView('timeGridDay', info.date);
+				}
+			});
+
+			document.getElementById('gotoDateButton').addEventListener('click', function () {
+				var dateInput = document.getElementById('dateInput');
+				var selectedDate = dateInput.value;
+
+				if (selectedDate) {
+
+					calendar.getEventSources().forEach(function (eventSource) {
+						eventSource.remove();
+					});
+
+					calendar.addEventSource({
+						url: '/events' + parametresToRequest,
+						method: 'GET',
+
+					});
+
+
+					calendar.gotoDate(selectedDate);
+					calendar.changeView('timeGridDay', selectedDate);
+				}
+			});
+
+			document.getElementById('gotoDateRangeButton').addEventListener('click', function () {
+				var selectedStartDate = new Date(document.getElementById('startDateInput').value);
+				var selectedEndDate = new Date(document.getElementById('endDateInput').value);
+
+
+
+				if (selectedStartDate && selectedEndDate) {
+					// Update the FullCalendar's event source to filter events by selected date range
+					calendar.getEventSources().forEach(function (eventSource) {
+						eventSource.remove();
+					});
+
+					calendar.addEventSource({
+						url: '/events-range' + parametresToRequest,
+						method: 'GET',
+						extraParams: {
+							startDate: selectedStartDate.toISOString(),
+							endDate: selectedEndDate.toISOString()
+						}
+					});
+
+					// Switch to the list view to show events for the selected date range
+					calendar.changeView('listYear');
+				}
+			});
+
+			calendar.render();
+		});
+	</script>
+
+</head>
+
+<body>
+
+	<div class="container mt-5">
+
+		<!-- Include the main content of each template here -->
+		<div th:replace="~{fragments/header :: header}"></div>
+
+		<h1 th:text="'Schedule of ' + ${entityDataMap['title']}"></h1>
+
+		<div class="row">
+			<div class="col-md-4">
+				<input type="date" id="dateInput" class="form-control" placeholder="Select a date">
+				<button id="gotoDateButton" class="btn btn-primary">Go to Date</button>
+			</div>
+			<div class="col-md-4">
+				<input type="date" id="startDateInput" class="form-control" placeholder="Start Date">
+				<input type="date" id="endDateInput" class="form-control" placeholder="End Date">
+				<button id="gotoDateRangeButton" class="btn btn-primary">Go to Date Range</button>
+			</div>
+		</div>>
+
+		<div id="calendar"></div>
+
+		<div th:replace="~{fragments/footer :: footer}"></div>
+	</div>
+
+	<div class="modal" id="eventModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="eventModalTitle">Lecture:</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p><strong>Details:</strong><span id="eventProperties"></span></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<form th:action="@{/lecture/details}" method="get">
+						<input type="hidden" name="lectureId" id="lectureId" value="">
+						<button type="submit" class="btn btn-primary">More Details</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

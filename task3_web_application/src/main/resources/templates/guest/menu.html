@@ -1,0 +1,43 @@
+<!-- /guest/menu-->
+<div th:fragment="menu" sec:authorize="!isAuthenticated()">
+	<div class="container">
+		<h3>Nice to see You!</h3>
+
+		<div class="row">
+			<!-- Left Column for Text -->
+			<div class="col-md-6">
+
+				<p>
+				<p>Welcome to <strong>Foxminded University</strong>! We are more than just an educational institution;
+					we are a close-knit family of passionate learners and dedicated educators.</p>
+
+				<p>At Foxminded University, you'll discover a vibrant community of individuals who share a common love
+					for learning and a drive to achieve their ambitions. Our commitment to excellence in education is
+					matched only by our dedication to fostering a supportive and inclusive environment where students
+					can thrive.</p>
+
+				<p>With a dynamic curriculum, experienced faculty, and a wide range of programs, we empower our students
+					to pursue their dreams and reach their full potential. Whether you're looking to expand your
+					knowledge, develop new skills, or embark on a journey of personal and professional growth, Foxminded
+					University is here to guide you every step of the way.</p>
+
+				<p>As you embark on your educational journey with us, we hope that Foxminded University will take a
+					special place in your heart. Together, we'll explore new horizons, embrace challenges, and create
+					memories that will last a lifetime.</p>
+
+				<p>Join us at Foxminded University, where your aspirations meet endless possibilities. Let's embark on
+					this exciting journey together!</p>
+			</div>
+			<!-- Right Column for Images -->
+			<div class="col-md-6" >
+				<img th:src="@{/images/intro/university/intro.png}" alt="Course Image" class="img-responsive">
+			</div>
+
+
+
+		</div>
+		<p><a href="/courses">See our Courses</a></p>
+		<p><a href="https://foxminded.ua/kontakty-1/">Contact Us</a></p>
+	</div>
+
+</div>

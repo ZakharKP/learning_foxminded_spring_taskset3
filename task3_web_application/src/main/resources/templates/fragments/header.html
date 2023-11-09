@@ -1,0 +1,12 @@
+<div th:fragment="header">
+    <!-- Your header content -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="btn btn-primary" href="/">Main Page</a>
+        <a class="btn btn-primary" href="/login" sec:authorize="!isAuthenticated()">Login</a>
+        
+
+			
+    </div>
+</nav>
+</div>

@@ -1,0 +1,94 @@
+<div th:fragment="edit" th:if="${#request.isUserInRole('ADMIN')}">
+
+
+	<div class="card-body">
+		<h3>
+			<p class="card-text"><strong>Intro:</strong></p>
+		</h3>
+		<button type="button" class="btn btn-primary" id="editIntro" data-toggle="collapse"
+			data-target="#editIntroForm">Edit Intro</button>
+	</div>
+
+	<div id="editIntroForm" class="collapse">
+		<div class="card-body">
+			<h3>
+				<p class="card-text"><strong>Images:</strong> </p>
+			</h3>
+			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#editImagesForm">Edit
+				Images</button>
+		</div>
+
+		<div id="editImagesForm" class="collapse">
+			<form th:action="@{/course/editor/intro/images/remove}" method="post" th:object="${course}">
+				<input type="hidden" name="courseId" th:value="${course.id}">
+				<div class="form-group">
+					<label for="name">Images:</label>
+					<div class="image-list">
+						<!-- Thymeleaf code to generate checkboxes for images -->
+						<th:block th:each="image : ${course.images}">
+							<div class="image-item">
+								<input type="checkbox" name="selectedImages" th:value="${image.id}">
+								<img th:src="@{'/images/' + ${image.id}}" alt="Thumbnail" class="img-thumbnail">
+							</div>
+						</th:block>
+					</div>
+					<button id="remove-image-button" type="submit" class="btn btn-danger">Remove Selected Images</button>
+				</div>
+			</form>
+
+			<div class="card-body" th:if="${#arrays.length(allowedImageCountArray) <= 0}">
+
+				<p class="card-text"><strong>Can't add more images</strong> </p>
+			</div>
+
+			<form th:if="${#arrays.length(allowedImageCountArray) > 0}" id="image-upload-form"
+				th:action="@{/course/editor/intro/images/add}" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="courseId" th:value="${course.id}">
+				<th:block th:each="step : ${allowedImageCountArray}">
+					<input type="file" class="custom-file-input" accept=".jpeg, .jpg, .png, .gif" name="selectedImages">
+					<label class="custom-file-label" for="customFile">Choose image(.jpeg, .jpg, .png, .gif)</label>
+				</th:block>
+				<button id="upload_button" type="submit" class="btn btn-primary">Upload</button>
+			</form>
+
+
+		</div>
+
+		<div class="card-body">
+			<h3>
+				<p class="card-text"><strong>Intro Text:</strong> </p>
+			</h3>
+			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#editTextForm">Edit Intro
+				Text</button>
+		</div>
+
+		<div id="editTextForm" class="collapse">
+
+			<form th:action="@{/course/editor/intro/text}" method="POST">
+				<input type="hidden" name="courseId" th:value="${course.id}">
+
+				<textarea name="introText" id="summernote"
+					th:text="${course.introText != null ? course.introText : 'Add Course Intro'}">
+							</textarea>
+				<button type="submit" class="btn btn-primary">Update Intro Text</button>
+			</form>
+
+		</div>
+		<script>
+			$(document).ready(function () {
+				$('#summernote').summernote({
+					height: 500,
+					width: 700
+				});
+			});
+
+		</script>
+	<!-- Checkbox validation-->
+	<script>
+		updateSubmitButtonStatus('remove-image-button');
+	</script>
+
+	</div>
+</div>
+
+</div>

@@ -1,0 +1,119 @@
+<!-- add-new-teacher.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Add Teacher</title>
+
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+	<!-- Table -->
+	<link th:rel="stylesheet" th:href="@{/webjars/datatables/1.13.5/css/jquery.dataTables.min.css}" />
+
+</head>
+
+<body>
+	<!-- Include the main content of each template here -->
+	<div th:replace="~{fragments/header :: header}"></div>
+
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 mt-5">
+				<h2>Add New Teacher</h2>
+				<form th:action="@{/admin/signup}" method="post" th:object="${form}">
+
+					<label for="firstName">First Name:</label>
+					<input type="text" id="firstName" name="firstName" th:field="*{firstName}" required><br>
+
+					<label for="lastName">Last Name:</label>
+					<input type="text" id="lastName" name="lastName" th:field="*{lastName}" required><br>
+
+					<!-- Include fields for LoginData -->
+					<label for="userName">Username:</label>
+					<input type="text" id="userName" name="login.userName" th:field="*{userName}" required><br>
+
+					<label for="password">Password:</label>
+					<input type="password" id="password" name="login.password" th:field="*{password}" required><br>
+
+					<label for="role">Set Admin Role if need it</label>
+					<input type="checkbox" class="form-check-input" id="selectedRoleCheckbox">
+					<input type="hidden" id="roleName" name="roleName" th:value="Teacher"><br>
+
+					<!-- Add Courses if need it -->
+					<div class="form-group">
+						<label for="coursesIds">Add Courses</label>
+
+						<table id="addCoursesTable" class="table table-bordered" style="width: 100%">
+							<caption>Choose courses to add from the list below</caption>
+							<thead>
+								<tr>
+									<th>Course Name</th>
+									<th>Course Description</th>
+									<th>Select</th>
+								</tr>
+							</thead>
+							<tbody >
+								<tr th:each="course : ${coursesWithoutTeacher}">
+									<td th:text="${course.courseName}"></td>
+									<td th:text="${course.courseDescription}"></td>
+									<td>
+										<input type="checkbox" class="form-check-input" th:field="*{coursesIds}"
+											th:value="${course.id}">
+									</td>
+								</tr>
+							</tbody>
+							
+						</table>
+					</div>
+					<button class="btn btn-primary" type="submit">SignUp Teacher</button>
+				</form>
+			</div>
+		</div>
+
+		<div th:replace="~{fragments/footer :: footer}"></div>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const checkbox = document.getElementById('selectedRoleCheckbox');
+			const roleInput = document.getElementById('roleName');
+
+			checkbox.addEventListener('change', function () {
+				roleInput.value = checkbox.checked ? 'Admin' : 'Teacher';
+			});
+		});
+	</script>
+
+
+
+
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+	<!-- Table -->
+	<script th:src="@{/webjars/datatables/1.13.5/js/jquery.dataTables.min.js}"></script>
+	<!-- Add this after including the jQuery and DataTables scripts -->
+	<script th:src="@{https://cdn.datatables.net/plug-ins/1.13.5/sorting/natural.js}"></script>
+
+
+	<script>
+		$(document).ready(function () {
+			$('#addCoursesTable').DataTable({
+				paging: false,
+				searching: true,
+				scrollY: '200px',
+				columnDefs: [
+					{type: 'natural', targets: '_all'}
+				]
+			});
+		});
+	</script>
+
+</body>
+
+</html>

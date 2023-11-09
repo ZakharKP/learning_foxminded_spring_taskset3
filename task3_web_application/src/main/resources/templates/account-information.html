@@ -1,0 +1,56 @@
+<!-- account-information.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Welcome</title>
+
+	<!-- Common styles and scripts -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+</head>
+
+<body>
+	<!-- Include the main content of each template here -->
+	<div th:replace="~{fragments/header :: header}"></div>
+
+	<div class="container">
+
+
+
+		<h2>Account Information</h2>
+		<p><strong>Username:</strong> <span th:text="${userDetails.username}"></span></p>
+		<p><strong>Account Non Expired:</strong>
+			<span th:text="${userDetails.accountNonExpired ? 'Yes' : 'No'}"></span>
+		</p>
+		<p><strong>Account Non Locked:</strong>
+			<span th:text="${userDetails.accountNonLocked ? 'Yes' : 'No'}"></span>
+		</p>
+		<p><strong>Credentials Non Expired:</strong>
+			<span th:text="${userDetails.credentialsNonExpired ? 'Yes' : 'No'}"></span>
+		</p>
+		<p><strong>Enabled:</strong>
+			<span th:text="${userDetails.enabled ? 'Yes' : 'No'}"></span>
+		</p>
+
+		<p><strong>Authorities (Roles):</strong></p>
+		<ul>
+			<li th:each="authority : ${userDetails.authorities}">
+				<span th:text="${authority.authority}"></span>
+			</li>
+		</ul>
+
+		<div th:replace="~{fragments/footer :: footer}"></div>
+
+	</div>
+
+
+	<!-- Include other common stylesheets and scripts here -->
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+</body>
+
+</html>

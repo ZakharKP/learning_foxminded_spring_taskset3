@@ -1,0 +1,49 @@
+<!-- /guest/course_intro-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Welcome To Foxminded University</title>
+
+	<!-- Common styles and scripts -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+</head>
+
+<body>
+	<!-- Include the main content of each template here -->
+	<div th:replace="~{fragments/header :: header}"></div>
+
+	<div class="container">
+		<h1 th:text="${course.courseName}"></h1>
+
+		<div class="row">
+			<!-- Left Column for Text -->
+			<div class="col-md-6">
+				<p th:utext="${course.introText}"></p>
+			</div>
+			<!-- Right Column for Images -->
+			<div class="col-md-6" th:if="course.images != null" th:each="image : ${course.images}">
+				<img th:src="@{'/images/' + ${image.id}}" alt="Course Image" class="img-responsive">
+			</div>
+
+
+
+		</div>
+
+		<p><a href="https://foxminded.ua/kontakty-1/">Contact Us</a></p>
+
+		<div th:replace="~{fragments/footer :: footer}"></div>
+
+	</div>
+
+
+	<!-- Include other common stylesheets and scripts here -->
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+</body>
+
+</html>

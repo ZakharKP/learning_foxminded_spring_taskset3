@@ -1,0 +1,113 @@
+<!-- student/editor -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Student's Editor</title>
+	<!-- Common styles and scripts -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+</head>
+
+<body>
+	<!-- Include the main content of each template here -->
+	<div th:replace="~{fragments/header :: header}"></div>
+
+	<div class="container">
+		<h1>Student's Editor</h1>
+		<div class="row">
+			<div class="col-md-4 mt-5">
+
+
+				<!-- Display success message -->
+				<div th:if="${param.success}" class="alert alert-success" role="alert">
+					Success: <span th:text="${param.message}"></span><br>
+				</div>
+
+				<!-- Display error message -->
+				<div th:if="${param.error}" class="alert alert-danger" role="alert">
+					Error: <span th:text="${param.message}"></span><br>
+				</div>
+
+				<div class="card-body">
+					<h3>
+						<p class="card-text"><strong>First Name:</strong> <span th:text="${student.firstName}"></span>
+						</p>
+					</h3>
+					<button type="button" class="btn btn-primary" data-toggle="collapse"
+						data-target="#editFirstNameForm">Edit First Name</button>
+				</div>
+
+				<div id="editFirstNameForm" class="collapse">
+					<form th:action="@{/student/editor/first_name}" method="post" th:object="${student}">
+						<input type="hidden" name="userName" th:value="${student.login.userName}">
+						<div class="form-group">
+							<label for="first_name">First Name</label>
+							<input type="text" class="form-control" id="firstName" name="firstName"
+								th:value="${student.firstName}" required>
+						</div>
+						<button type="submit" class="btn btn-primary">Update First Name</button>
+					</form>
+				</div>
+
+				<div class="card-body">
+					<h3>
+						<p class="card-text"><strong>Last Name:</strong> <span th:text="${student.lastName}"></span></p>
+					</h3>
+					<button type="button" class="btn btn-primary" data-toggle="collapse"
+						data-target="#editLastNameForm">Edit Last Name</button>
+				</div>
+
+				<div id="editLastNameForm" class="collapse">
+					<form th:action="@{/student/editor/last_name}" method="post" th:object="${student}">
+						<input type="hidden" name="userName" th:value="${student.login.userName}">
+						<div class="form-group">
+							<label for="last_name">Last Name</label>
+							<input type="text" class="form-control" id="lastName" name="lastName"
+								th:value="${student.lastName}" required>
+						</div>
+						<button type="submit" class="btn btn-primary">Update Last Name</button>
+					</form>
+				</div>
+
+				<div class="card-body">
+					<h3>
+						<p class="card-text"><strong>Group:</strong> <span td
+								th:text="${student.group != null ? student.group.groupName : ''}"></span></p>
+					</h3>
+					<button type="button" class="btn btn-primary" id="editGroup" data-toggle="collapse"
+						data-target="#editGroupForm">Edit Group</button>
+				</div>
+
+				<div id="editGroupForm" class="collapse">
+					<form th:action="@{/student/editor/group}" method="post" th:object="${student}">
+						<input type="hidden" name="userName" th:value="${student.login.userName}">
+						<div class="form-group">
+							<label for="group">Group</label>
+							<select class="form-control selectpicker" id="groupId" name="groupId" required>
+								<option value="">-- Select a group --</option>
+								<option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.groupName}">
+								</option>
+							</select><br>
+						</div>
+						<button type="submit" class="btn btn-primary">Update Group</button>
+					</form>
+				</div>
+
+			</div>
+
+		</div>
+		<div th:replace="~{fragments/footer :: footer}"></div>
+
+	</div>
+
+
+	<!-- Include other common stylesheets and scripts here -->
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+</body>
+
+</html>

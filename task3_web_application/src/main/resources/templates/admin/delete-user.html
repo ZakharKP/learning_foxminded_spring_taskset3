@@ -1,0 +1,45 @@
+<!-- admin/delete-user.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Delete Confirm</title>
+	<!-- Common styles and scripts -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+</head>
+
+<body>
+	<!-- Include the main content of each template here -->
+	<div th:replace="~{fragments/header :: header}"></div>
+	<div class="container mt-5">
+		<h1 class="mb-4">Delete Confirmation</h1>
+
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card-title">Are You Sure You Want To Delete?</h2>
+				<p class="card-text"><strong>First Name:</strong> <span th:text="${user.firstName}"></span></p>
+				<p class="card-text"><strong>Last Name:</strong> <span th:text="${user.lastName}"></span></p>
+				<p class="card-text"><strong>User Name:</strong> <span th:text="${user.login.userName}"></span></p>
+				<p class="card-text"><strong>Role:</strong> <span th:text="${user.login.role}"></span></p>
+
+				<form th:action="@{/admin/del-user}" method="post">
+					<input type="hidden" name="userName" th:value="${user.login.userName}" />
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</form>
+			</div>
+		</div>
+		<div th:replace="~{fragments/footer :: footer}"></div>
+
+	</div>
+
+
+	<!-- Include other common stylesheets and scripts here -->
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+</body>
+
+</html>

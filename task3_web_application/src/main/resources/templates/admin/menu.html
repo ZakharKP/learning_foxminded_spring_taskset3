@@ -1,0 +1,15 @@
+<!-- admin/admin_menu.html -->
+<div th:fragment="menu" th:if="${#request.isUserInRole('ADMIN')}">
+
+	<div class="container">
+		<h3>Admin Menu</h3>
+		<ul>
+			<li><a th:href="@{/admin/signup/teacher}">Add New Teacher</a></li>
+			<li><a th:href="@{/admin/signup/student}">Add New Student</a></li>
+			<li><a th:href="@{/course/creation}">Add New Course</a></li>
+			<li><a th:href="@{/group/creation}">Add New Group</a></li>
+			<li><a th:href="@{/lecture/creation}">Add New Lecture</a></li>
+			<li><a th:href="@{/admin/editor}">Manage Admin Role</a></li>
+		</ul>
+	</div>
+</div>

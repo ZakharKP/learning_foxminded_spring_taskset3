@@ -1,0 +1,49 @@
+<!-- teacher/personal.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Teacher Details</title>
+	<!-- Common styles and scripts -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+</head>
+
+<body>
+	<!-- Include the main content of each template here -->
+	<div th:replace="~{fragments/header :: header}"></div>
+	<div class="container mt-5">
+		<h1>Teacher Details</h1>
+
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card-title">Teacher Information</h2>
+				<p class="card-text"><strong>First Name:</strong> <span th:text="${teacher.firstName}"></span></p>
+				<p class="card-text"><strong>Last Name:</strong> <span th:text="${teacher.lastName}"></span></p>
+				<p class="card-text"><strong>Courses:</strong></p>
+				<ul>
+					<li th:if="${teacher.courses != null}"  th:each="course : ${teacher.courses}" th:text="${course.courseName}"></li>
+				</ul>
+
+			
+
+				<!-- Include the admin menu if the viewer is an admin -->
+				<div th:replace="~{admin/managment/teacher :: menu}"></div>
+			</div>
+		</div>
+
+
+		<div th:replace="~{fragments/footer :: footer}"></div>
+	</div>
+
+
+
+	<!-- Include other common stylesheets and scripts here -->
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+</body>
+
+</html>

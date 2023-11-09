@@ -1,0 +1,74 @@
+<!-- student_managment.html -->
+<div th:fragment="menu" th:if="${#request.isUserInRole('ADMIN')}">
+
+	<p class="card-text"><strong>User Name:</strong> <span th:text="${student.login.userName}"></span></p>
+	<p class="card-text"><strong>Role: </strong><span th:text="${student.login.role.roleName}"></span> </p>
+	<br>
+
+	<p class="card-text">
+	<form th:action="@{/student/schedule}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${student.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Student's Schedule</strong></button>
+	</form>
+	</p>
+
+	<h2>Manage Student</h2>
+	<br>
+
+	<p class="card-text">
+	<form th:action="@{/admin/user-account-information}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${student.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>User's Account
+				Information</strong></button>
+	</form>
+	</p>
+</p>
+	<p class="card-text">
+	<form th:action="@{/admin/password-editor}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${student.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Change User's Password</strong></button>
+	</form>
+	</p>
+	<p class="card-text">
+	<form th:action="@{/student/editor}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${student.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Edit Student</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/student/courses}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${student.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Student's Courses</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/student/group}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${student.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Student's Group</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/student/teachers}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${student.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Student's' Teachers</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/student/classmates}" method="get" style="display: inline;">
+		<input type="hidden" name="userName" th:value="${student.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Student's' Classmates</strong></button>
+	</form>
+	</p>
+
+	<p class="card-text">
+	<form th:action="@{/admin/delete-user}" method="get">
+		<input type="hidden" name="userName" th:value="${student.login.userName}" />
+		<button type="submit" class="btn btn-link"><strong>Delete Student</strong></button>
+	</form>
+	</p>
+
+</div>

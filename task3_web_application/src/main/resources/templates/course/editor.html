@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Course's Editor</title>
+	<!-- Common styles and scripts -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap-select/1.13.11/dist/css/bootstrap-select.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+
+
+	<!-- Include other common stylesheets and scripts here -->
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-select/1.13.11/dist/js/bootstrap-select.js}"></script>
+
+	<!-- Include Summernote CSS from WebJars -->
+	<link th:rel="stylesheet" th:href="@{/webjars/summernote/0.8.10/summernote.css}">
+
+
+	<!-- Include Summernote JavaScript from WebJars -->
+	<script th:src="@{/webjars/summernote/0.8.10/summernote.min.js}"></script>
+	
+	<!-- Checkbox validation-->
+	<script th:src="@{/js/form-validation.js}" type="text/javascript"></script>
+
+
+</head>
+
+<body>
+	<!-- Include the main content of each template here -->
+	<div th:replace="~{fragments/header :: header}"></div>
+
+	<div class="container">
+		<h1>Course's Editor</h1>
+		<div class="row">
+			<div class="col-md-4 mt-5">
+
+
+				<!-- Display success message -->
+				<div th:if="${param.success}" class="alert alert-success" role="alert">
+					Success: <span th:text="${param.message}"></span><br>
+				</div>
+
+				<!-- Display error message -->
+				<div th:if="${param.error}" class="alert alert-danger" role="alert">
+					Error: <span th:text="${param.message}"></span><br>
+				</div>
+
+				<div class="card-body">
+					<h3>
+						<p class="card-text"><strong>Name:</strong> <span th:text="${course.courseName}"></span></p>
+					</h3>
+					<button type="button" class="btn btn-primary" data-toggle="collapse"
+						data-target="#editNameForm">Edit Name</button>
+				</div>
+
+				<div id="editNameForm" class="collapse">
+					<form th:action="@{/course/editor/name}" method="post" th:object="${course}">
+						<input type="hidden" name="courseId" th:value="${course.id}">
+						<div class="form-group">
+							<label for="name">Name</label>
+							<input type="text" class="form-control" id="courseName" name="courseName"
+								th:value="${course.courseName}" required>
+						</div>
+						<button type="submit" class="btn btn-primary">Update Name</button>
+					</form>
+				</div>
+
+				<div class="card-body">
+					<h3>
+						<p class="card-text"><strong>Description:</strong> <span
+								th:text="${course.courseDescription}"></span> </p>
+					</h3>
+					<button type="button" class="btn btn-primary" id="editDescription" data-toggle="collapse"
+						data-target="#editDescriptionForm">Edit Description</button>
+				</div>
+
+				<div id="editDescriptionForm" class="collapse">
+					<form th:action="@{/course/editor/description}" method="post" th:object="${course}">
+						<input type="hidden" name="courseId" th:value="${course.id}">
+						<div class="form-group">
+							<label for="description">Description</label>
+							<input type="text" class="form-control" id="description" name="courseDescription"
+								th:value="${course.courseDescription}" required>
+						</div>
+						<button type="submit" class="btn btn-primary">Update Description</button>
+					</form>
+				</div>
+
+				<div class="card-body">
+					<h3>
+						<p class="card-text"><strong>Teacher:</strong> <span td
+								th:text="${course.teacher != null ? course.teacher.firstName + ' ' + course.teacher.lastName : ''}"></span>
+						</p>
+					</h3>
+					<button type="button" class="btn btn-primary" id="editTeacher" data-toggle="collapse"
+						data-target="#editTeacherForm">Edit Teacher</button>
+				</div>
+
+				<div id="editTeacherForm" class="collapse">
+					<form th:action="@{/course/editor/teacher}" method="post" th:object="${course}">
+						<input type="hidden" name="courseId" th:value="${course.id}">
+						<div class="form-group">
+							<label for="teacher">Teacher</label>
+							<select class="form-control selectpicker" id="teacherId" name="teacherId" required>
+								<option th:each="teacher : ${teachers}" th:value="${teacher.id}">
+									<span th:text="${teacher.firstName + ' ' + teacher.lastName}"></span>
+								</option>
+								<option value="" th:selected="${course.teacher == null}">Select a Teacher</option>
+							</select><br>
+						</div>
+						<button type="submit" class="btn btn-primary">Update Teacher</button>
+					</form>
+				</div>
+
+				<div th:replace="~{course/editor_intro :: edit}"></div>
+
+			</div>
+		</div>
+
+	</div>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+
+	</div>
+
+
+
+</body>
+
+</html>
