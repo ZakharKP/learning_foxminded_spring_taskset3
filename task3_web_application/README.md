@@ -328,7 +328,7 @@ To try this project, you'll need to have [Docker](https://www.docker.com/get-sta
 
   1. Clone this repository:
       ```
-      git clone <repository path>
+      git clone https://github.com/ZakharKP/learning_foxminded_spring_taskset3.git
       ```
 
   2. Navigate to the directory "task3_web_application" in the project directory:
