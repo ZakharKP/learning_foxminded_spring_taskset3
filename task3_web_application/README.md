@@ -342,7 +342,7 @@ To try this project, you'll need to have [Docker](https://www.docker.com/get-sta
       ```
 
   3. Run Docker Compose:
-    ```
+      ```
       docker-compose up
       ```
       (or)
