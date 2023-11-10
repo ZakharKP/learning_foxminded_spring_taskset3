@@ -1,0 +1,48 @@
+name: Test with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:20.10.21-dind
+        env: 
+          DOCKER_HOST: "tcp://docker:2375"
+          DOCKER_TLS_CERTDIR: ""
+          DOCKER_DRIVER: overlay2
+          DOCKER_OPTIONS: "--tls=false"
+
+    env:      
+      MAVEN_OPTS: >-
+        -Dhttps.protocols=TLSv1.2
+        -Dmaven.repo.local=$GITHUB_WORKSPACE/task3_web_application/.m2/repository
+        -Dorg.slf4j.simpleLogger.showDateTime=true
+        -Djava.awt.headless=true
+      MAVEN_CLI_OPTS: >-
+        --batch-mode
+        --errors
+        --fail-at-end
+        --show-version
+        --no-transfer-progress
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '8'  
+        
+      - name: Test with Maven
+        run: |
+          cd task3_web_application
+          mvn clean test
